@@ -1,0 +1,10 @@
+test.c
+*.swp
+*.out
+*.py
+*.o
+*.a
+*.so
+*.sh
+.vscode/
+test.txt
