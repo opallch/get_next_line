@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/15 11:47:23 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/15 13:28:58 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ Bonus (append the _bonus.[c\h] suffix to the bonus part files.):
 //     }
 // }
 
-// returns everything before the first \n in buffer
+/* 
+Returns everything before the first \n in buffer.
+Return value includes \n at the end.
+*/
 char    *extract_line(char *buffer)
 {
     int     n_char;
@@ -80,14 +83,27 @@ char    *extract_line(char *buffer)
     return (line);
 }
 
-// // keeps everything after the first \n in buffer
-// void    update_buffer(char *buffer)
-// {
-//     int     n_char;
+// keeps everything after the first \n in buffer
+void    update_buffer(char *buffer)
+{
+    int     i;
+    int     j;
+    char    *new_buffer_val;
 
-//     n_char = 0;
-//     while (buffer[n_char] && buffer[n_char] != '\n')
-//     {
-//         n_char++;
-//     }
-// }
+    i = 0;
+    while (buffer[i] && buffer[i] != '\n')
+        i++;
+    i++;
+    j = 0;
+    new_buffer_val = malloc(ft_strlen(buffer) - i + 1);
+    if (!new_buffer_val)
+        return;
+    while (buffer[i])
+    {
+        new_buffer_val[j++] = buffer[i];
+        buffer[i++] = 0;
+    }
+    new_buffer_val[j] = 0; 
+    ft_strlcpy(buffer, new_buffer_val, j + 1);
+    free(new_buffer_val);
+}

@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:13:19 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/15 11:46:03 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/15 11:59:08 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ char	*ft_strchr(const char *s, int c);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 size_t	ft_strlen(const char *str);
 char    *extract_line(char *buffer);
+void    update_buffer(char *buffer);
 
 #endif
