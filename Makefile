@@ -6,7 +6,7 @@
 #    By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/12 09:17:28 by oleung            #+#    #+#              #
-#    Updated: 2023/12/15 11:25:58 by oleung           ###   ########.fr        #
+#    Updated: 2023/12/15 12:11:15 by oleung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,6 @@ run: $(SRCS)
 
 run-valgrind: $(SRCS)
 	$(CC) $(CFLAGS) -g *.c
-	valgrind ./a.out
+	valgrind --track-origins=yes ./a.out
 	
 .PHONY: bonus all clean fclean re norm format
