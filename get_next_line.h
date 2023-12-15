@@ -6,15 +6,16 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:13:19 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/15 11:59:08 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/15 14:02:18 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef GET_NEXT_LINE_H
+#define GET_NEXT_LINE_H
 
 #ifndef BUFFER_SIZE
 #define BUFFER_SIZE 1000
 #endif
-#ifndef GET_NEXT_LINE_H
-#define GET_NEXT_LINE_H
 
 #include <stdlib.h>
 #include <stdio.h>
