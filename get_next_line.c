@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/15 11:28:23 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/15 11:47:23 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ char    *extract_line(char *buffer)
     {
         n_char++;
     }
-    line = malloc(++n_char);
+    n_char += 2;
+    line = malloc(n_char);
     if (!line)
         return (NULL);
     ft_strlcpy(line, buffer, n_char);
-    line[ft_strlen((const char *) line)] = '\n';
     return (line);
 }
 
