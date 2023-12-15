@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/15 13:28:58 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/15 14:02:07 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ Bonus (append the _bonus.[c\h] suffix to the bonus part files.):
     
 //     if (fd != -1)
 //     {
-//     // while EOF has not been reached
+//     // check if \n in buffer using ft_strchr()
+//     // if yes return line
+    
+//     // else read
+//     // while EOF has not been reached and no \n in buffer after read()
 //         while(read(fd, buffer, BUFFER_SIZE) >= 0) // read() returns number of bytes read
 //         {
 //             // check if \n in cache
