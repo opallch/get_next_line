@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: oleung <oleung@student.42.fr>              +#+  +:+       +#+         #
+#    By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/12 09:17:28 by oleung            #+#    #+#              #
-#    Updated: 2023/12/14 14:45:05 by oleung           ###   ########.fr        #
+#    Updated: 2023/12/15 11:25:58 by oleung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = get_next_line
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror # buffer size??
 AR = ar r
 RM = rm -rf
 
@@ -45,4 +45,12 @@ format: $(SRCS)
 	python3 -m c_formatter_42 *.c *.h
 	make norm
 
+run: $(SRCS)
+	$(CC) $(CFLAGS) *.c
+	./a.out
+
+run-valgrind: $(SRCS)
+	$(CC) $(CFLAGS) -g *.c
+	valgrind ./a.out
+	
 .PHONY: bonus all clean fclean re norm format
