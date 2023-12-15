@@ -1,4 +1,4 @@
-test.c
+test*
 *.swp
 *.out
 *.py
@@ -7,4 +7,3 @@ test.c
 *.so
 *.sh
 .vscode/
-test.txt
