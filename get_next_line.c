@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/16 13:44:49 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/16 13:58:34 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,23 @@ Test cases:
 char    *get_next_line(int fd)
 {
     char    *line;
-    ssize_t read_res;
+    ssize_t n_read_bytes;
     static char    buffer[BUFFER_SIZE];
 
-    read_res = read(fd, buffer, BUFFER_SIZE);
-    while (!ft_strchr(buffer, '\n') && read_res > 0)
+    n_read_bytes = read(fd, buffer, BUFFER_SIZE);
+    while (!ft_strchr(buffer, '\n') && n_read_bytes > 0)
     {
-        read_res = read(fd, buffer, BUFFER_SIZE);
+        n_read_bytes = read(fd, buffer, BUFFER_SIZE);
     }
-    line = extract_line(buffer);
-    if (!line)
+    if (ft_strlen(buffer) > 0)
+    {
+        line = extract_line(buffer);
+        if (!line)
+            return (NULL);
+        update_buffer(buffer);
+    }
+    else
         return (NULL);
-    // printf("buffer len: %ld\n", ft_strlen(buffer));
-    update_buffer(buffer);
     return (line);
 }
 
