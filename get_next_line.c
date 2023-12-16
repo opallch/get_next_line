@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/15 14:02:07 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/16 09:00:11 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,36 +34,39 @@ Bonus (append the _bonus.[c\h] suffix to the bonus part files.):
 - only 1 static var is used
 - can manage multiple fd at the same time (array)
 */
-// char    *get_next_line(int fd)
-// {
-//     char    *line;
-//     static char    buffer[BUFFER_SIZE];
+char    *get_next_line(int fd)
+{
+    char    *line;
+    static char    buffer[BUFFER_SIZE];
     
-//     if (fd != -1)
-//     {
-//     // check if \n in buffer using ft_strchr()
-//     // if yes return line
-    
-//     // else read
-//     // while EOF has not been reached and no \n in buffer after read()
-//         while(read(fd, buffer, BUFFER_SIZE) >= 0) // read() returns number of bytes read
-//         {
-//             // check if \n in cache
-//             if (ft_strchr(buffer, '\n'))
-//             {
-//                 line = extract_line(buffer);
-//                 if (!line)
-//                     return (NULL);
-//                 update_buffer(buffer);
-//                 break;
-//             }
-//         }
-//         // EOF: 
-//         // if buffer is not empty: return the rest to the buffer
-//         // TODO else: ?
-//     return (line);
-//     }
-// }
+    if (fd == -1)
+        return (NULL);
+    if (ft_strchr(buffer, '\n'))
+    {
+        line = extract_line(buffer);
+        if (!line)
+            return (NULL);
+        update_buffer(buffer);
+        return (line);
+    }
+    // while EOF has not been reached and no \n in buffer after read()
+    while(read(fd, buffer, BUFFER_SIZE) > 0)
+    {
+        if (ft_strchr(buffer, '\n'))
+        {
+            line = extract_line(buffer);
+            if (!line)
+                return (NULL);
+            update_buffer(buffer);
+            break;
+        }
+    }
+    // TODO how to detect EOF
+    // EOF: 
+    // if buffer is not empty: return the rest to the buffer
+    // TODO else: ?
+    return (line);
+}
 
 /* 
 Returns everything before the first \n in buffer.
