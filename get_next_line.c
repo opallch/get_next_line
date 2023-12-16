@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/16 16:47:45 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/16 17:06:55 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,11 @@ char    *get_next_line(int fd)
     static char    buffer[BUFFER_SIZE];
 
     n_read_bytes = read(fd, buffer, BUFFER_SIZE);
+    printf("53 buffer: %s\n", buffer);
     while (!ft_strchr(buffer, '\n') && n_read_bytes > 0)
     {
         n_read_bytes = read(fd, buffer, BUFFER_SIZE);
+        printf("57 buffer: %s\n", buffer);
     }
     if (ft_strlen(buffer) > 0)
     {

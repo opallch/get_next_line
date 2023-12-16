@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:13:19 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/16 12:43:28 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/16 17:01:10 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define GET_NEXT_LINE_H
 
 #ifndef BUFFER_SIZE
-#define BUFFER_SIZE 1000
+#define BUFFER_SIZE 10
 #endif
 
 #include <stdlib.h>
