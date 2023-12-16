@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/16 13:58:34 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/16 16:47:45 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,22 @@ void    update_buffer(char *buffer)
     int     i;
     int     j;
     char    *new_buffer_val;
+    size_t  malloc_size_new_buffer;
 
     i = 0;
     while (buffer[i] && buffer[i] != '\n')
         i++;
     i++;
+    malloc_size_new_buffer = ft_strlen(buffer) - i + 1;
+    if (malloc_size_new_buffer <= 0)
+    {
+        i = 0;
+        while (buffer[i])
+            buffer[i++] = 0;
+        return;
+    }
     j = 0;
-    new_buffer_val = malloc(ft_strlen(buffer) - i + 1);
+    new_buffer_val = malloc(malloc_size_new_buffer);
     if (!new_buffer_val)
         return;
     while (buffer[i])
