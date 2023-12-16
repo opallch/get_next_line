@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
+/*   By: oleung <oleung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/16 09:00:11 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/16 13:44:49 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ has not reached EOF.
 Highlights/ Edge cases:
 - Static variable
 - Buffer size: test with 1, 9999, 10000000 etc.
-- Line size
+- different Line size
 - fd can point to not only regular files (what are irregular files?)
 
 Forbidden: lseek(), libft, global variables
@@ -33,38 +33,32 @@ Forbidden: lseek(), libft, global variables
 Bonus (append the _bonus.[c\h] suffix to the bonus part files.):
 - only 1 static var is used
 - can manage multiple fd at the same time (array)
+
+Test cases:
+1. File
+    - empty file
+    - line size: 1, 1000, 1000000
+    - 
+2. 
+3.
+
 */
 char    *get_next_line(int fd)
 {
     char    *line;
+    ssize_t read_res;
     static char    buffer[BUFFER_SIZE];
-    
-    if (fd == -1)
+
+    read_res = read(fd, buffer, BUFFER_SIZE);
+    while (!ft_strchr(buffer, '\n') && read_res > 0)
+    {
+        read_res = read(fd, buffer, BUFFER_SIZE);
+    }
+    line = extract_line(buffer);
+    if (!line)
         return (NULL);
-    if (ft_strchr(buffer, '\n'))
-    {
-        line = extract_line(buffer);
-        if (!line)
-            return (NULL);
-        update_buffer(buffer);
-        return (line);
-    }
-    // while EOF has not been reached and no \n in buffer after read()
-    while(read(fd, buffer, BUFFER_SIZE) > 0)
-    {
-        if (ft_strchr(buffer, '\n'))
-        {
-            line = extract_line(buffer);
-            if (!line)
-                return (NULL);
-            update_buffer(buffer);
-            break;
-        }
-    }
-    // TODO how to detect EOF
-    // EOF: 
-    // if buffer is not empty: return the rest to the buffer
-    // TODO else: ?
+    // printf("buffer len: %ld\n", ft_strlen(buffer));
+    update_buffer(buffer);
     return (line);
 }
 

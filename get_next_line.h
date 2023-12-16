@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
+/*   By: oleung <oleung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:13:19 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/15 14:02:18 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/16 12:43:28 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 char    *get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);
