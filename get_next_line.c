@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/17 11:12:22 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/17 11:13:43 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,58 +99,58 @@ char    *append_buffer_to_cache(char *cache, char *buffer)
     return (new_cache);
 }
 
-// /* 
-// Returns everything before the first \n in cache.
-// Return value includes \n at the end.
-// */
-// char    *extract_line(char *cache)
-// {
-//     int     n_char;
-//     char    *line;
+/* 
+Returns everything before the first \n in cache.
+Return value includes \n at the end.
+*/
+char    *extract_line(char *cache)
+{
+    int     n_char;
+    char    *line;
 
-//     n_char = 0;
-//     while (cache[n_char] && cache[n_char] != '\n')
-//     {
-//         n_char++;
-//     }
-//     n_char += 2;
-//     line = malloc(n_char);
-//     if (!line)
-//         return (NULL);
-//     ft_strlcpy(line, cache, n_char);
-//     return (line);
-// }
+    n_char = 0;
+    while (cache[n_char] && cache[n_char] != '\n')
+    {
+        n_char++;
+    }
+    n_char += 2;
+    line = malloc(n_char);
+    if (!line)
+        return (NULL);
+    ft_strlcpy(line, cache, n_char);
+    return (line);
+}
 
-// // keeps everything after the first \n in buffer
-// void    update_cache(char *cache, char *buffer)
-// {
-//     int     i;
-//     int     j;
-//     char    *new_cache_val;
-//     size_t  malloc_size_new_cache;
+// keeps everything after the first \n in cache
+void    update_cache(char *cache)
+{
+    int     i;
+    int     j;
+    char    *new_cache_val;
+    size_t  malloc_size_new_cache;
 
-//     i = 0;
-//     while (cache[i] && cache[i] != '\n')
-//         i++;
-//     i++;
-//     malloc_size_new_cache = ft_strlen(cache) - i + 1;
-//     if (malloc_size_new_cache <= 0)
-//     {
-//         i = 0;
-//         while (cache[i])
-//             cache[i++] = 0;
-//         return;
-//     }
-//     j = 0;
-//     new_cache_val = malloc(malloc_size_new_cache);
-//     if (!new_cache_val)
-//         return;
-//     while (cache[i])
-//     {
-//         new_cache_val[j++] = cache[i];
-//         cache[i++] = 0;
-//     }
-//     new_cache_val[j] = 0; 
-//     ft_strlcpy(cache, new_cache_val, j + 1);
-//     free(new_cache_val);
-// }
+    i = 0;
+    while (cache[i] && cache[i] != '\n')
+        i++;
+    i++;
+    malloc_size_new_cache = ft_strlen(cache) - i + 1;
+    if (malloc_size_new_cache <= 0)
+    {
+        i = 0;
+        while (cache[i])
+            cache[i++] = 0;
+        return;
+    }
+    j = 0;
+    new_cache_val = malloc(malloc_size_new_cache);
+    if (!new_cache_val)
+        return;
+    while (cache[i])
+    {
+        new_cache_val[j++] = cache[i];
+        cache[i++] = 0;
+    }
+    new_cache_val[j] = 0; 
+    ft_strlcpy(cache, new_cache_val, j + 1);
+    free(new_cache_val);
+}
