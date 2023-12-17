@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oleung <oleung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:13:19 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/16 17:01:10 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/17 10:52:14 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@
 char    *get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
+char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *str);
 char    *extract_line(char *buffer);
-void    update_buffer(char *buffer);
+void    update_cache(char *buffer);
+char    *append_buffer_to_cache(char *cache, char *buffer);
 
 #endif

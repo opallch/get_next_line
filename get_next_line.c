@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oleung <oleung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/16 17:06:55 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/17 11:12:22 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,83 +43,114 @@ Test cases:
 3.
 
 */
-char    *get_next_line(int fd)
-{
-    char    *line;
-    ssize_t n_read_bytes;
-    static char    buffer[BUFFER_SIZE];
 
-    n_read_bytes = read(fd, buffer, BUFFER_SIZE);
-    printf("53 buffer: %s\n", buffer);
-    while (!ft_strchr(buffer, '\n') && n_read_bytes > 0)
-    {
-        n_read_bytes = read(fd, buffer, BUFFER_SIZE);
-        printf("57 buffer: %s\n", buffer);
-    }
-    if (ft_strlen(buffer) > 0)
-    {
-        line = extract_line(buffer);
-        if (!line)
-            return (NULL);
-        update_buffer(buffer);
-    }
-    else
-        return (NULL);
-    return (line);
-}
-
-/* 
-Returns everything before the first \n in buffer.
-Return value includes \n at the end.
+/*
+3 steps:
+1. append new buffer value to cache
+2. extract line from cache
+3. update cache (keep everything after the first \n)
 */
-char    *extract_line(char *buffer)
-{
-    int     n_char;
-    char    *line;
+// char    *get_next_line(int fd)
+// {
+//     char    *line;
+//     ssize_t n_read_bytes;
+//     char    buffer[BUFFER_SIZE];
+//     static char *cache;
 
-    n_char = 0;
-    while (buffer[n_char] && buffer[n_char] != '\n')
+//     n_read_bytes = read(fd, buffer, BUFFER_SIZE);
+//     cache = append_buffer_to_cache(cache, buffer);
+//     // printf("53 buffer: %s\n", buffer);
+//     while (!ft_strchr(cache, '\n') && n_read_bytes > 0)
+//     {
+//         n_read_bytes = read(fd, buffer, BUFFER_SIZE);
+//         cache = ft_strlcat(cache, buffer, ft_strlen(cache) + ft_strlen(buffer) + 1);
+//         // printf("57 buffer: %s\n", buffer);
+//     }
+//     if (ft_strlen(buffer) > 0)
+//     {
+//         line = extract_line(buffer);
+//         if (!line)
+//             return (NULL);
+//         update_cache(buffer);
+//     }
+//     else
+//         return (NULL);
+//     return (line);
+// }
+
+/*Append read value from buffer to cache.*/
+char    *append_buffer_to_cache(char *cache, char *buffer)
+{
+    char    *tmp_cache;
+    char    *new_cache;
+    if (!cache)
     {
-        n_char++;
+        new_cache = malloc(BUFFER_SIZE + 1);
+        ft_strlcpy(new_cache, buffer, BUFFER_SIZE + 1);
+    }   
+    else
+    {   
+        tmp_cache = malloc(ft_strlen(cache) + BUFFER_SIZE + 1);
+        ft_strlcpy(tmp_cache, cache, ft_strlen(cache) + 1);
+        new_cache = ft_strjoin(tmp_cache, buffer);
+        free(tmp_cache);
+        free(cache);
     }
-    n_char += 2;
-    line = malloc(n_char);
-    if (!line)
-        return (NULL);
-    ft_strlcpy(line, buffer, n_char);
-    return (line);
+    return (new_cache);
 }
 
-// keeps everything after the first \n in buffer
-void    update_buffer(char *buffer)
-{
-    int     i;
-    int     j;
-    char    *new_buffer_val;
-    size_t  malloc_size_new_buffer;
+// /* 
+// Returns everything before the first \n in cache.
+// Return value includes \n at the end.
+// */
+// char    *extract_line(char *cache)
+// {
+//     int     n_char;
+//     char    *line;
 
-    i = 0;
-    while (buffer[i] && buffer[i] != '\n')
-        i++;
-    i++;
-    malloc_size_new_buffer = ft_strlen(buffer) - i + 1;
-    if (malloc_size_new_buffer <= 0)
-    {
-        i = 0;
-        while (buffer[i])
-            buffer[i++] = 0;
-        return;
-    }
-    j = 0;
-    new_buffer_val = malloc(malloc_size_new_buffer);
-    if (!new_buffer_val)
-        return;
-    while (buffer[i])
-    {
-        new_buffer_val[j++] = buffer[i];
-        buffer[i++] = 0;
-    }
-    new_buffer_val[j] = 0; 
-    ft_strlcpy(buffer, new_buffer_val, j + 1);
-    free(new_buffer_val);
-}
+//     n_char = 0;
+//     while (cache[n_char] && cache[n_char] != '\n')
+//     {
+//         n_char++;
+//     }
+//     n_char += 2;
+//     line = malloc(n_char);
+//     if (!line)
+//         return (NULL);
+//     ft_strlcpy(line, cache, n_char);
+//     return (line);
+// }
+
+// // keeps everything after the first \n in buffer
+// void    update_cache(char *cache, char *buffer)
+// {
+//     int     i;
+//     int     j;
+//     char    *new_cache_val;
+//     size_t  malloc_size_new_cache;
+
+//     i = 0;
+//     while (cache[i] && cache[i] != '\n')
+//         i++;
+//     i++;
+//     malloc_size_new_cache = ft_strlen(cache) - i + 1;
+//     if (malloc_size_new_cache <= 0)
+//     {
+//         i = 0;
+//         while (cache[i])
+//             cache[i++] = 0;
+//         return;
+//     }
+//     j = 0;
+//     new_cache_val = malloc(malloc_size_new_cache);
+//     if (!new_cache_val)
+//         return;
+//     while (cache[i])
+//     {
+//         new_cache_val[j++] = cache[i];
+//         cache[i++] = 0;
+//     }
+//     new_cache_val[j] = 0; 
+//     ft_strlcpy(cache, new_cache_val, j + 1);
+//     free(new_cache_val);
+// }

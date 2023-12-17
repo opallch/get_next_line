@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:13:09 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/15 12:03:40 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/17 10:53:32 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,29 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	}
 	dest[pos] = '\0';
 	return (ft_strlen(src));
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*result;
+	size_t	i;
+	size_t	j;
+
+	result = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	i = 0;
+	j = 0;
+	if (!result || !s1 || !s2)
+		return (NULL);
+	while (s1[i])
+	{
+		result[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		result[i + j] = s2[j];
+		j++;
+	}
+	result[i + j] = 0;
+	return (result);
 }
