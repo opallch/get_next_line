@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/17 11:13:43 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/17 11:48:01 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,33 +50,29 @@ Test cases:
 2. extract line from cache
 3. update cache (keep everything after the first \n)
 */
-// char    *get_next_line(int fd)
-// {
-//     char    *line;
-//     ssize_t n_read_bytes;
-//     char    buffer[BUFFER_SIZE];
-//     static char *cache;
+char    *get_next_line(int fd)
+{
+    char    *line;
+    ssize_t n_read_bytes;
+    char    buffer[BUFFER_SIZE];
+    static char *cache;
 
-//     n_read_bytes = read(fd, buffer, BUFFER_SIZE);
-//     cache = append_buffer_to_cache(cache, buffer);
-//     // printf("53 buffer: %s\n", buffer);
-//     while (!ft_strchr(cache, '\n') && n_read_bytes > 0)
-//     {
-//         n_read_bytes = read(fd, buffer, BUFFER_SIZE);
-//         cache = ft_strlcat(cache, buffer, ft_strlen(cache) + ft_strlen(buffer) + 1);
-//         // printf("57 buffer: %s\n", buffer);
-//     }
-//     if (ft_strlen(buffer) > 0)
-//     {
-//         line = extract_line(buffer);
-//         if (!line)
-//             return (NULL);
-//         update_cache(buffer);
-//     }
-//     else
-//         return (NULL);
-//     return (line);
-// }
+    n_read_bytes = read(fd, buffer, BUFFER_SIZE);
+    cache = append_buffer_to_cache(cache, buffer);
+    printf("53 cache: %s\n", cache);
+    while (!ft_strchr(cache, '\n') && n_read_bytes > 0)
+    {
+        n_read_bytes = read(fd, buffer, BUFFER_SIZE);
+        cache = append_buffer_to_cache(cache, buffer);
+        printf("57 cache: %s\n", cache);
+    }
+    line = extract_line(cache);
+    if (!line)
+        return (NULL);
+    update_cache(cache);
+    printf("76 updated cache: %s\n", cache);
+    return (line);
+}
 
 /*Append read value from buffer to cache.*/
 char    *append_buffer_to_cache(char *cache, char *buffer)
@@ -132,7 +128,7 @@ void    update_cache(char *cache)
     i = 0;
     while (cache[i] && cache[i] != '\n')
         i++;
-    i++;
+    i += 2;
     malloc_size_new_cache = ft_strlen(cache) - i + 1;
     if (malloc_size_new_cache <= 0)
     {
