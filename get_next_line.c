@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/21 13:08:12 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/21 13:12:37 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void    update_cache(char *cache)
     i = 0;
     while (cache[i] && cache[i] != '\n')
         i++;
-    i++;
+    i += 2;
     malloc_size_new_cache = ft_strlen(cache) - i + 1;
     if (malloc_size_new_cache <= 0)
     {
