@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/21 18:25:46 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/21 18:37:06 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ char    *get_next_line(int fd)
     }
     else
     {
-        if (cache)
-            free(cache);
+        // if (cache)
+        //     free(cache);
         return (NULL);
     }
 }
@@ -47,7 +47,7 @@ char    *read_buffer_to_cache(int fd, char *cache)
     n_read_bytes = 1;
     if (!cache)
     {
-        cache = malloc(1);
+        cache = (char *) malloc(1);
         cache[0] = 0;
     }
     while (!ft_strchr(cache, '\n') && n_read_bytes != 0)
