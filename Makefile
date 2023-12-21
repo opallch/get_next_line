@@ -6,7 +6,7 @@
 #    By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/12 09:17:28 by oleung            #+#    #+#              #
-#    Updated: 2023/12/21 18:42:43 by oleung           ###   ########.fr        #
+#    Updated: 2023/12/21 19:38:44 by oleung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,10 +39,10 @@ fclean: clean
 re: clean all
 
 norm: $(SRCS)
-	norminette *.c *.h
+	norminette get_next_line*.c *.h
 
 format: $(SRCS)
-	python3 -m c_formatter_42 *.c *.h
+	python3 -m c_formatter_42 get_next_line*.c *.h
 	make norm
 
 run: $(SRCS)
