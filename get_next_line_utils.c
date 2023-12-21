@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:13:09 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/21 17:43:15 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/21 18:11:39 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ size_t	ft_strlcpy(char *dest, const char *src, size_t size)
 	return (ft_strlen(src));
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*result;
 	size_t	i;
@@ -83,6 +83,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	result[i + j] = 0;
+	free(s1);
 	return (result);
 }
 

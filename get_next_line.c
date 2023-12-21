@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/21 18:00:04 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/21 18:25:46 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,19 @@
 char    *get_next_line(int fd)
 {
     char    *line;
-    ssize_t n_read_bytes;
-    char    buffer[BUFFER_SIZE];
     static char *cache;
 
     if (fd < 0 || BUFFER_SIZE < 1)
         return (NULL);
-    n_read_bytes = 1;
-    while (!ft_strchr(cache, '\n') && n_read_bytes != 0)
-    {
-        n_read_bytes = read(fd, buffer, BUFFER_SIZE);
-        if (n_read_bytes < 0)
-        {
-            free(cache);
-            return (NULL);
-        }
-        cache = read_buffer_to_cache(cache, buffer, n_read_bytes);
-    }
-    // TODO logic:
-    if (cache && ft_strlen(cache) > 0)
+    cache = read_buffer_to_cache(fd, cache);
+    if (!cache)
+        return (NULL);
+    if (ft_strlen(cache) > 0)
     {
         line = extract_line(cache);
         if (!line)
             return (NULL);
         update_cache(cache);
-        // printf("75 updated cache: %s\n", cache);
         return (line);
     }
     else
@@ -51,23 +39,30 @@ char    *get_next_line(int fd)
 }
 
 /*Append read value from buffer to cache.*/
-char    *read_buffer_to_cache(char *cache, char *buffer, ssize_t n_read_bytes)
+char    *read_buffer_to_cache(int fd, char *cache)
 {
-    char    *new_cache;
+    ssize_t n_read_bytes;
+    char    buffer[BUFFER_SIZE];
     
-    buffer[n_read_bytes] = 0;
+    n_read_bytes = 1;
     if (!cache)
     {
-        new_cache = malloc(BUFFER_SIZE + 1);
-        ft_strlcpy(new_cache, buffer, BUFFER_SIZE + 1);
-    }   
-    else
-    {   
-        new_cache = ft_strjoin(cache, buffer);
-        free(cache);
+        cache = malloc(1);
+        cache[0] = 0;
     }
-    ft_bzero(buffer, BUFFER_SIZE);
-    return (new_cache);
+    while (!ft_strchr(cache, '\n') && n_read_bytes != 0)
+    {
+        n_read_bytes = read(fd, buffer, BUFFER_SIZE);
+        if (n_read_bytes < 0)
+        {
+            if (cache)
+                free(cache);
+            return (NULL);
+        }
+        buffer[n_read_bytes] = 0;
+        cache = ft_strjoin(cache, buffer);
+    }
+    return (cache);
 }
 
 /* 
