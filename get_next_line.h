@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:13:19 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/21 11:50:16 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/21 13:07:08 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #define GET_NEXT_LINE_H
 
 #ifndef BUFFER_SIZE
-#define BUFFER_SIZE 10
+#define BUFFER_SIZE 42
 #endif
 
 #include <stdlib.h>
@@ -30,6 +30,6 @@ size_t	ft_strlen(const char *str);
 char    *extract_line(char *buffer);
 void	ft_bzero(void *s, size_t n);
 void    update_cache(char *buffer);
-char    *append_buffer_to_cache(char *cache, char *buffer);
+char    *append_buffer_to_cache(char *cache, char *buffer, ssize_t n_read_bytes);
 
 #endif

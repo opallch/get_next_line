@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/21 11:51:52 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/21 13:08:12 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,16 @@ char    *get_next_line(int fd)
     static char *cache;
 
     n_read_bytes = read(fd, buffer, BUFFER_SIZE);
+    // printf("61 n_read_bytes: %ld\n", n_read_bytes);
     if (n_read_bytes > 0)
-        cache = append_buffer_to_cache(cache, buffer);
-    printf("63 cache: %s\n", cache);
-    while (!ft_strchr(cache, '\n') && n_read_bytes > 0)
+        cache = append_buffer_to_cache(cache, buffer, n_read_bytes);
+    // printf("63 cache: %s\n", cache);
+    while (!ft_strchr(cache, '\n') && n_read_bytes != 0)
     {
         n_read_bytes = read(fd, buffer, BUFFER_SIZE);
-        printf("67 n_read_bytes: %ld\n", n_read_bytes);
-        cache = append_buffer_to_cache(cache, buffer);
-        printf("69 cache: %s\n", cache);
+        // printf("67 n_read_bytes: %ld\n", n_read_bytes);
+        cache = append_buffer_to_cache(cache, buffer, n_read_bytes);
+        // printf("69 cache: %s\n", cache);
     }
     if (ft_strlen(cache) > 0)
     {
@@ -74,7 +75,7 @@ char    *get_next_line(int fd)
         if (!line)
             return (NULL);
         update_cache(cache);
-        printf("75 updated cache: %s\n", cache);
+        // printf("75 updated cache: %s\n", cache);
         return (line);
     }
     else
@@ -85,9 +86,10 @@ char    *get_next_line(int fd)
 }
 
 /*Append read value from buffer to cache.*/
-char    *append_buffer_to_cache(char *cache, char *buffer)
+char    *append_buffer_to_cache(char *cache, char *buffer, ssize_t n_read_bytes)
 {
     char    *new_cache;
+    buffer[n_read_bytes] = 0;
     if (!cache)
     {
         new_cache = malloc(BUFFER_SIZE + 1);
