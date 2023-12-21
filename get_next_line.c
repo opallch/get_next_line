@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/21 19:19:51 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/21 19:29:10 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ char    *get_next_line(int fd)
 
     if (fd < 0 || BUFFER_SIZE < 1)
         return (NULL);
+    if (!cache)
+    {
+        cache = (char *) malloc(1);
+        cache[0] = 0;
+    }
     cache = read_buffer_to_cache(fd, cache);
     // printf("CACHE: %s\n", cache);
     if (!cache)
@@ -38,10 +43,7 @@ char    *read_buffer_to_cache(int fd, char *cache)
     
     n_read_bytes = 1;
     if (!cache)
-    {
-        cache = (char *) malloc(1);
-        cache[0] = 0;
-    }
+        return (NULL);
     while (!ft_strchr(cache, '\n') && n_read_bytes != 0)
     {
         n_read_bytes = read(fd, buffer, BUFFER_SIZE);
