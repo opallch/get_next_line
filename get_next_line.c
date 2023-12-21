@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/21 19:29:10 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/21 19:34:21 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,11 @@ char    *get_next_line(int fd)
 char    *read_buffer_to_cache(int fd, char *cache)
 {
     ssize_t n_read_bytes;
-    char    buffer[BUFFER_SIZE];
+    char    *buffer;
     
     n_read_bytes = 1;
-    if (!cache)
+    buffer = malloc(BUFFER_SIZE + 1);
+    if (!cache || !buffer)
         return (NULL);
     while (!ft_strchr(cache, '\n') && n_read_bytes != 0)
     {
@@ -50,11 +51,13 @@ char    *read_buffer_to_cache(int fd, char *cache)
         if (n_read_bytes < 0)
         {
             free(cache);
+            free(buffer);
             return (NULL);
         }
         buffer[n_read_bytes] = 0;
         cache = ft_strjoin(cache, buffer);
     }
+    free(buffer);
     return (cache);
 }
 
