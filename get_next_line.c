@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/21 19:01:58 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/21 19:19:51 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,15 @@ char    *get_next_line(int fd)
     if (fd < 0 || BUFFER_SIZE < 1)
         return (NULL);
     cache = read_buffer_to_cache(fd, cache);
+    // printf("CACHE: %s\n", cache);
     if (!cache)
         return (NULL);
-    
     line = extract_line(cache);
-    if (!line)
-        return (NULL);
+    // printf("LINE: %s\n", cache);
     cache = update_cache(cache);
+    // printf("UPDATED CACHE: %s\n", cache);
     return (line);
+}
 
 /*Append read value from buffer to cache.*/
 char    *read_buffer_to_cache(int fd, char *cache)
@@ -65,6 +66,8 @@ char    *extract_line(char *cache)
     char    *line;
 
     n_char = 0;
+    if (!cache[n_char])
+        return (NULL);
     while (cache[n_char] && cache[n_char] != '\n')
     {
         n_char++;
@@ -91,14 +94,14 @@ char *update_cache(char *cache)
     {
         free(cache);
         return (NULL);
-    }
-    i++;   
-    j = 0;
+    }   
     new_cache = malloc(ft_strlen(cache) - i + 1);
     if (!new_cache)
         return (NULL);
+    j = 0;
+    i++;
     while (cache[i])
-        new_cache[j++] = cache[i];
+        new_cache[j++] = cache[i++];
     new_cache[j] = 0; 
     free(cache);
     return (new_cache);
