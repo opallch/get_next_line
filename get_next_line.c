@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/21 09:54:26 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/21 11:22:15 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ char    *get_next_line(int fd)
     n_read_bytes = read(fd, buffer, BUFFER_SIZE);
     if (n_read_bytes > 0)
         cache = append_buffer_to_cache(cache, buffer);
-    // printf("63 cache: %s\n", cache);
+    printf("63 cache: %s\n", cache);
     while (!ft_strchr(cache, '\n') && n_read_bytes > 0)
     {
         n_read_bytes = read(fd, buffer, BUFFER_SIZE);
-        // printf("67 n_read_bytes: %ld\n", n_read_bytes);
+        printf("67 n_read_bytes: %ld\n", n_read_bytes);
         cache = append_buffer_to_cache(cache, buffer);
-        // printf("69 cache: %s\n", cache);
+        printf("69 cache: %s\n", cache);
     }
     if (ft_strlen(cache) > 0)
     {
@@ -74,16 +74,19 @@ char    *get_next_line(int fd)
         if (!line)
             return (NULL);
         update_cache(cache);
-        // printf("75 updated cache: %s\n", cache);
+        printf("75 updated cache: %s\n", cache);
         return (line);
     }
-    return (NULL);
+    else
+    {
+        free(cache);
+        return (NULL);
+    }
 }
 
 /*Append read value from buffer to cache.*/
 char    *append_buffer_to_cache(char *cache, char *buffer)
 {
-    char    *tmp_cache;
     char    *new_cache;
     if (!cache)
     {
@@ -92,10 +95,7 @@ char    *append_buffer_to_cache(char *cache, char *buffer)
     }   
     else
     {   
-        tmp_cache = malloc(ft_strlen(cache) + BUFFER_SIZE + 1);
-        ft_strlcpy(tmp_cache, cache, ft_strlen(cache) + 1);
-        new_cache = ft_strjoin(tmp_cache, buffer);
-        free(tmp_cache);
+        new_cache = ft_strjoin(cache, buffer);
         free(cache);
     }
     return (new_cache);
