@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/21 13:08:12 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/21 13:26:16 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,21 @@ char    *get_next_line(int fd)
     char    buffer[BUFFER_SIZE];
     static char *cache;
 
+    if (fd < 0 || BUFFER_SIZE < 1)
+        return (NULL);
     n_read_bytes = read(fd, buffer, BUFFER_SIZE);
     // printf("61 n_read_bytes: %ld\n", n_read_bytes);
     if (n_read_bytes > 0)
         cache = append_buffer_to_cache(cache, buffer, n_read_bytes);
     // printf("63 cache: %s\n", cache);
-    while (!ft_strchr(cache, '\n') && n_read_bytes != 0)
+    while (cache && !ft_strchr(cache, '\n') && n_read_bytes != 0)
     {
         n_read_bytes = read(fd, buffer, BUFFER_SIZE);
         // printf("67 n_read_bytes: %ld\n", n_read_bytes);
         cache = append_buffer_to_cache(cache, buffer, n_read_bytes);
         // printf("69 cache: %s\n", cache);
     }
-    if (ft_strlen(cache) > 0)
+    if (cache && ft_strlen(cache) > 0)
     {
         line = extract_line(cache);
         if (!line)
@@ -80,7 +82,8 @@ char    *get_next_line(int fd)
     }
     else
     {
-        free(cache);
+        if (cache)
+            free(cache);
         return (NULL);
     }
 }
