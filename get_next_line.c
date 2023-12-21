@@ -6,50 +6,12 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/21 13:26:16 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/21 18:00:04 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-/*
-Reads a text file pointed by fd (also standard input) one line at a time.
-Returns the line that was read (including \n, except EOF && does not end with \n).
-read(), malloc(), free() are allowed.
-
-Undefined behaviour when:
-1. fd changed since the last call whereas read()
-has not reached EOF.
-2. reading a binary file.
-
-Highlights/ Edge cases:
-- Static variable
-- Buffer size: test with 1, 9999, 10000000 etc.
-- different Line size
-- fd can point to not only regular files (what are irregular files?)
-
-Forbidden: lseek(), libft, global variables
-
-Bonus (append the _bonus.[c\h] suffix to the bonus part files.):
-- only 1 static var is used
-- can manage multiple fd at the same time (array)
-
-Test cases:
-1. File
-    - empty file
-    - line size: 1, 1000, 1000000
-    - 
-2. 
-3.
-
-*/
-
-/*
-3 steps:
-1. append new buffer value to cache
-2. extract line from cache
-3. update cache (keep everything after the first \n)
-*/
 char    *get_next_line(int fd)
 {
     char    *line;
@@ -59,18 +21,18 @@ char    *get_next_line(int fd)
 
     if (fd < 0 || BUFFER_SIZE < 1)
         return (NULL);
-    n_read_bytes = read(fd, buffer, BUFFER_SIZE);
-    // printf("61 n_read_bytes: %ld\n", n_read_bytes);
-    if (n_read_bytes > 0)
-        cache = append_buffer_to_cache(cache, buffer, n_read_bytes);
-    // printf("63 cache: %s\n", cache);
-    while (cache && !ft_strchr(cache, '\n') && n_read_bytes != 0)
+    n_read_bytes = 1;
+    while (!ft_strchr(cache, '\n') && n_read_bytes != 0)
     {
         n_read_bytes = read(fd, buffer, BUFFER_SIZE);
-        // printf("67 n_read_bytes: %ld\n", n_read_bytes);
-        cache = append_buffer_to_cache(cache, buffer, n_read_bytes);
-        // printf("69 cache: %s\n", cache);
+        if (n_read_bytes < 0)
+        {
+            free(cache);
+            return (NULL);
+        }
+        cache = read_buffer_to_cache(cache, buffer, n_read_bytes);
     }
+    // TODO logic:
     if (cache && ft_strlen(cache) > 0)
     {
         line = extract_line(cache);
@@ -89,9 +51,10 @@ char    *get_next_line(int fd)
 }
 
 /*Append read value from buffer to cache.*/
-char    *append_buffer_to_cache(char *cache, char *buffer, ssize_t n_read_bytes)
+char    *read_buffer_to_cache(char *cache, char *buffer, ssize_t n_read_bytes)
 {
     char    *new_cache;
+    
     buffer[n_read_bytes] = 0;
     if (!cache)
     {

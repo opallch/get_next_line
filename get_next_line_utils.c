@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:13:09 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/21 11:50:07 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/21 17:43:15 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*ft_strchr(const char *s, int c)
 {
 	int	i;
 
+	if (!s)
+		return (NULL);
 	i = 0;
 	c %= 256;
 	while (s[i])
