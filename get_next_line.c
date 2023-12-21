@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/17 12:12:39 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/21 09:54:26 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,26 @@ char    *get_next_line(int fd)
     static char *cache;
 
     n_read_bytes = read(fd, buffer, BUFFER_SIZE);
-    cache = append_buffer_to_cache(cache, buffer);
-    printf("53 cache: %s\n", cache);
+    if (n_read_bytes > 0)
+        cache = append_buffer_to_cache(cache, buffer);
+    // printf("63 cache: %s\n", cache);
     while (!ft_strchr(cache, '\n') && n_read_bytes > 0)
     {
         n_read_bytes = read(fd, buffer, BUFFER_SIZE);
+        // printf("67 n_read_bytes: %ld\n", n_read_bytes);
         cache = append_buffer_to_cache(cache, buffer);
-        printf("57 cache: %s\n", cache);
+        // printf("69 cache: %s\n", cache);
     }
-    line = extract_line(cache);
-    if (!line)
-        return (NULL);
-    update_cache(cache);
-    printf("76 updated cache: %s\n", cache);
-    return (line);
+    if (ft_strlen(cache) > 0)
+    {
+        line = extract_line(cache);
+        if (!line)
+            return (NULL);
+        update_cache(cache);
+        // printf("75 updated cache: %s\n", cache);
+        return (line);
+    }
+    return (NULL);
 }
 
 /*Append read value from buffer to cache.*/
