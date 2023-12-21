@@ -6,7 +6,7 @@
 /*   By: oleung <oleung@student.42berlin.de>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 09:12:59 by oleung            #+#    #+#             */
-/*   Updated: 2023/12/21 11:22:15 by oleung           ###   ########.fr       */
+/*   Updated: 2023/12/21 11:51:52 by oleung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ char    *append_buffer_to_cache(char *cache, char *buffer)
         new_cache = ft_strjoin(cache, buffer);
         free(cache);
     }
+    ft_bzero(buffer, BUFFER_SIZE);
     return (new_cache);
 }
 
